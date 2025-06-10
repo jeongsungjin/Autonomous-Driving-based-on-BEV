@@ -1,0 +1,7 @@
+<launch>
+  <!-- 이미지 퍼블리셔 노드 -->
+  <node name="waypoints_maker" pkg="path_planner" type="waypoints_maker.py" output="screen" />
+
+  <!-- HSV 기반 장애물 검출 노드 -->
+  <node name="path_maker" pkg="path_planner" type="path_maker.py" output="screen" />
+</launch>

@@ -1,0 +1,7 @@
+<launch>
+  <!-- 이미지 퍼블리셔 노드 -->
+  <node name="image_publisher_node" pkg="image_publisher" type="image_publisher.py" output="screen" />
+
+  <!-- HSV 기반 장애물 검출 노드 -->
+  <node name="obstacle_detection_hsv" pkg="image_publisher" type="obstacle_detection_hsv.py" output="screen" />
+</launch>

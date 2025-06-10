@@ -1,0 +1,8 @@
+prefix=/home/ubuntu/catkin_make/devel
+
+Name: control_motor
+Description: Description of control_motor
+Version: 0.0.1
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

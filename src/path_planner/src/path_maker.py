@@ -33,7 +33,7 @@ class PathFitter:
                 z = np.polyfit(x, y, 3)
                 p = np.poly1d(z)
 
-                x_new = np.linspace(min(x), max(x), 200)
+                x_new = np.linspace(min(x), max(x), 100)
                 y_new = p(x_new)
 
                 # 메시지 구성

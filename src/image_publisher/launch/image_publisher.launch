@@ -4,4 +4,6 @@
 
   <!-- HSV 기반 장애물 검출 노드 -->
   <node name="obstacle_detection_hsv" pkg="image_publisher" type="obstacle_detection_hsv.py" output="screen" />
+  <node name="car_detection" pkg="image_publisher" type="car_detection.py" output="screen" />
+
 </launch>

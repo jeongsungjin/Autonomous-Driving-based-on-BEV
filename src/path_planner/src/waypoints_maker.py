@@ -10,7 +10,18 @@ class ObstacleToWaypoint:
         self.waypoint_pub = rospy.Publisher('/waypoint_info', Waypoint, queue_size=1)
         self.marker_pub = rospy.Publisher('/waypoint_marker', MarkerArray, queue_size=1)
         rospy.Subscriber('/obstacle', MarkerArray, self.obstacle_callback)
+        rospy.Subscriber('/car_pos', MarkerArray, self.carpose_callback)
+
         rospy.Subscriber('/waypoint_info', Waypoint, self.callback)
+        
+    def carpose_callback(self, msg):
+        markers = msg.markers
+        if len(markers) == 0:
+            return
+
+        self.car_pos = markers[0].pose.position
+
+
     def obstacle_callback(self, msg):
         markers = msg.markers
         if len(markers) == 0:
@@ -32,8 +43,9 @@ class ObstacleToWaypoint:
                 # 원 중심 기준으로 반지름 r의 원 위 점
                 x = obs.x + r * math.cos(theta)
                 y = obs.y + r * math.sin(theta)
-                waypoints_x.append(x)
-                waypoints_y.append(y)
+                if y > self.car_pos.y and x < self.car_pos.x:
+                    waypoints_x.append(x)
+                    waypoints_y.append(y)
 
         else:
             # ✅ 다중 장애물 회피: 중점에서 오른쪽 offset
@@ -53,6 +65,9 @@ class ObstacleToWaypoint:
                 waypoints_x.append(x_offset)
                 waypoints_y.append(y_offset)
 
+        waypoints_x.insert(0, self.car_pos.x)
+        waypoints_y.insert(0, self.car_pos.y)
+        
         # ✅ 메시지 생성 및 발행
         wp_msg = Waypoint()
         wp_msg.x_arr = waypoints_x

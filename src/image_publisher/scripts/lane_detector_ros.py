@@ -98,9 +98,7 @@ class LaneDetectionROS:
                 img_hsv = cv2.cvtColor(frame_resized, cv2.COLOR_BGR2HSV)
 
                 # 노란색 및 흰색 마스크 생성
-                mask_yellow = cv2.inRange(img_hsv, self.lower_yellow, self.upper_yellow)
                 mask_white = cv2.inRange(img_hsv, self.lower_white, self.upper_white)
-                filtered_yellow = cv2.bitwise_and(frame_resized, frame_resized, mask=mask_yellow)
                 filtered_white = cv2.bitwise_and(frame_resized, frame_resized, mask=mask_white)
                 masks = cv2.bitwise_or(mask_yellow, mask_white)
                 filtered_img = cv2.bitwise_and(frame_resized, frame_resized, mask=masks)

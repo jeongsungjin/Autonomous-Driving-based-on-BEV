@@ -18,7 +18,7 @@ class ObstacleDetector:
         self.rate = rospy.Rate(30)
 
         # 초기 HSV 범위 (파란색)
-        self.lower_blue = np.array([103,89, 0])
+        self.lower_blue = np.array([103, 89, 0])
         self.upper_blue = np.array([147, 156, 81])
 
         # 트랙바 윈도우
@@ -68,8 +68,8 @@ class ObstacleDetector:
             marker.id = i
             marker.type = Marker.CUBE
             marker.action = Marker.ADD
-            marker.pose.position.x = float(x + w/2) / 100.0   # px → meter 환산 가정
-            marker.pose.position.y = float(y + h/2) / 100.0
+            marker.pose.position.x = float(x + w / 2) / 100.0  # px → meter 환산 가정
+            marker.pose.position.y = float(y + h / 2) / 100.0
             marker.pose.position.z = 0.5
             marker.scale.x = float(w) / 100.0
             marker.scale.y = float(h) / 100.0

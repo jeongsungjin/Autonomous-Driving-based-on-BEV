@@ -1,0 +1,22 @@
+<launch>
+  <!-- Optional: camera driver or bag file providing /camera/color/image_raw -->
+  <!-- <include file="$(find your_camera_pkg)/launch/camera.launch" /> -->
+
+  <!-- 장애물(차량) 검출 노드 -->
+  <node pkg="image_publisher" type="car_detection.py" name="detector" output="screen">
+    <!-- 픽셀→미터 선형 변환 파라미터; 환경에 맞춰 조정-->
+    <param name="fx" value="0.01" />
+    <param name="fy" value="0.01" />
+    <param name="u0" value="320.0" />
+    <param name="v0" value="480.0" />
+  </node>
+
+  <!-- 장애물 → 웨이포인트 생성 노드 -->
+  <node pkg="path_planner" type="waypoints_maker.py" name="wp_maker" output="screen" />
+
+  <!-- 웨이포인트 → 경로 보간 노드 -->
+  <node pkg="path_planner" type="path_maker.py" name="path_fitter" output="screen" />
+
+  <!-- Pure Pursuit 주행 제어 노드 -->
+  <node pkg="path_tracking" type="pure_pursuit.py" name="pure_pursuit" output="screen" />
+</launch> 

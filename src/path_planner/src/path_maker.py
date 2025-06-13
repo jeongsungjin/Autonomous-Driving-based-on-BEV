@@ -28,13 +28,21 @@ class PathFitter:
                 continue
 
             try:
-                x = self.x_array
-                y = self.y_array
-                z = np.polyfit(x, y, 3)
-                p = np.poly1d(z)
+                # Waypoints를 지수 t(=index)에 대한 파라메트릭 다항식으로 맞춤
+                x = np.array(self.x_array)
+                y = np.array(self.y_array)
 
-                x_new = np.linspace(min(x), max(x), 100)
-                y_new = p(x_new)
+                t = np.arange(len(x))  # 0,1,2,...
+                # 데이터 수에 따라 다항식 차수 결정(최대 3차)
+                deg = min(3, len(x) - 1)
+
+                # x(t), y(t) 각각 적합
+                p_x = np.poly1d(np.polyfit(t, x, deg))
+                p_y = np.poly1d(np.polyfit(t, y, deg))
+
+                t_new = np.linspace(0, len(x) - 1, 100)
+                x_new = p_x(t_new)
+                y_new = p_y(t_new)
 
                 # 메시지 구성
                 wp_msg = Waypoint()
